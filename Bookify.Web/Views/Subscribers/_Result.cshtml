@@ -1,0 +1,49 @@
+﻿@model SubscriberViewMOdel
+
+@if(Model is null)
+{
+    <div class="alert alert-dismissible bg-light-warning border border-warning border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-10 js-alert">
+        <!--begin::Icon-->
+        <i class="ki-duotone ki-message-text-2 fs-2hx text-danger me-4 mb-5 mb-sm-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>                    <!--end::Icon-->
+        <!--begin::Content-->
+        <div class="d-flex flex-column pe-0 pe-sm-10">
+            <h5 class="mb-1">No Subscribers were found!</h5>
+            <a asp-action="Create" class="btn btn-primary btn-sm mt-5">Add Subscriber</a>
+        </div>
+        <!--end::Content-->
+    </div>
+}
+else
+{
+    <div class="p-3 mb-2 bg-white text-dark">
+        <div class="d-flex align-items-center">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-1">
+                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                            <a asp-action="Detials" asp-route-id="@Model.Id">
+                                <div class="symbol-label">
+                                    <img src="@Model.ImageThumbnailUrl" class="w-100">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <a asp-action="Detials" asp-route-id="@Model.Id" class="text-gray-800 text-hover-primary mb-1">@Model.FullName</a>
+                            <span>@Model.Email</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-end mt-2">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm">
+                                Edite
+                                <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+}

@@ -1,0 +1,54 @@
+﻿@model RentalFormViewModel
+
+@{
+    var title = Model.CurrentCopies.Any() ? "Edit" : "Add";
+    ViewData["Title"] = title +" Rental";
+}
+
+<div class="card mb-7">
+    <div class="card-header">
+        <h3 class="card-title">@title Rental</h3>
+    </div>
+    <div class="card-body">
+        <partial name="_SearchRental" model="new SearchViewModel()" />
+    </div>
+    <div class="card mb-5 mb-xl-8">
+        <!--begin::Header-->
+        <div class="card-header border-0 pt-5">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bold text-gray-900">Books</span>
+                <span class="text-muted mt-1 fw-semibold fs-7">You can add Up to @Model.MaxAllowed book(s)</span>
+            </h3>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body pt-5">
+            <form asp-controller="Rental" id="CopiesForm">
+                <input type="hidden" asp-for="SubscriberKey" />
+                @foreach (var copy in Model.CurrentCopies)
+                {
+                    <partial name="_CopyDetials" model="copy" />
+                }
+                <button type="submit" class="btn btn-primary js-submit-btn d-none">
+                    <span class="indicator-label">
+                        <i class="bi bi-check2"></i>
+                        Save
+                    </span>
+                    <span class="indicator-progress">
+                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </form>
+        </div>
+        <!--end::Body-->
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var maxSelectedCopies = @Model.MaxAllowed;
+    </script>
+    <script src="~/js/rental-form.js"></script>
+}

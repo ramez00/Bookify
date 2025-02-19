@@ -1,0 +1,69 @@
+﻿@model IEnumerable<RentalHistoryViewModel>
+
+@{
+    ViewData["Title"] = "Rental History";
+}
+
+@if (!Model.Any())
+{
+    <div class="alert bg-light-info border border-info border-3 border-dashed d-flex flex-column flex-sm-row w-100 p-5 mt-10">
+        <!--begin::Icon-->
+        <!--begin::Svg Icon | path: icons/duotune/general/gen007.svg-->
+        <span class="svg-icon svg-icon-2hx svg-icon-info me-4 mb-5 mb-sm-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.3" d="M12 22C13.6569 22 15 20.6569 15 19C15 17.3431 13.6569 16 12 16C10.3431 16 9 17.3431 9 19C9 20.6569 10.3431 22 12 22Z" fill="currentColor"></path>
+                <path d="M19 15V18C19 18.6 18.6 19 18 19H6C5.4 19 5 18.6 5 18V15C6.1 15 7 14.1 7 13V10C7 7.6 8.7 5.6 11 5.1V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V5.1C15.3 5.6 17 7.6 17 10V13C17 14.1 17.9 15 19 15ZM11 10C11 9.4 11.4 9 12 9C12.6 9 13 8.6 13 8C13 7.4 12.6 7 12 7C10.3 7 9 8.3 9 10C9 10.6 9.4 11 10 11C10.6 11 11 10.6 11 10Z" fill="currentColor"></path>
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+        <!--end::Icon-->
+        <!--begin::Content-->
+        <div class="d-flex flex-column pe-0 pe-sm-10 justify-content-center">
+            <h5 class="mb-0">No rentals occur on this copy.</h5>
+        </div>
+        <!--end::Content-->
+    </div>
+}
+else
+{
+    
+<div id="RentalHistory" class="card tab-pane">
+    <div class="card-body">
+        <div>
+            <table id="copyTable" class="table table-row-dashed table-row-gray-300 align-middle gy-4 ">
+                <thead>
+                    <tr class="fw-bold fs-6 text-gray-800 text-uppercase">
+                        <th>Rented To</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Extended</th>
+                        <th>Delays</th>
+                        <th>Return On</th>
+                    </tr>
+                </thead>
+                <tbody id="RentalHistoryTableBody">
+                    @foreach (var rental in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <span class="fs-3 fw-bold">@rental.SubscriberFullName</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fs-4 fw-normal">@rental.SubscriberEmail</span>
+                                </div>
+                            </td>
+                            <td>@rental.RentalDate.ToString("dd-MM-yyyy")</td>
+                            <td>@rental.EndDate.ToString("dd-MM-yyyy")</td>
+                            <td>@rental.ExtendOn?.ToString("dd-MM-yyyy")</td>
+                            <td>@rental.DelayInDays</td>
+                            <td>@rental.ReturnDate?.ToString("dd-MM-yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+}

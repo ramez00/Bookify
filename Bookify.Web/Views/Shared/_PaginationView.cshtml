@@ -1,0 +1,18 @@
+﻿@model PaginationViewModel
+
+<ul class="pagination justify-content-start mb-3">
+    <li class="page-item previous @(Model.PageNumber == 1 ? "disabled" : string.Empty)">
+        <a href="javascript:;" class="page-link" data-page-number="@Model.PreviousPage">
+            <i class="previous"></i>
+        </a>
+    </li>
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <li class="page-item @(Model.PageNumber == i ? "active" : string.Empty)"><a href="javascript:;" class="page-link" data-page-number="@i">@i</a></li>
+    }
+    <li class="page-item next @(Model.PageNumber == Model.TotalPages ? "disabled" : string.Empty)">
+        <a href="javascript:;" class="page-link" data-page-number="@Model.NextPage">
+            <i class="next"></i>
+        </a>
+    </li>
+</ul>

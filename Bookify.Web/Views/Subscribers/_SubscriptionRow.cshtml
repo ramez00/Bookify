@@ -1,0 +1,23 @@
+﻿@model SubscribtionViewModel
+
+<tr>
+	<td>
+		<div class="d-flex align-items-center">
+			<div class="d-flex justify-content-start flex-column">
+				<span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6 ps-3">@Model.StartDate.ToString("dd,MMM , yyyy")</span>
+			</div>
+		</div>
+	</td>
+	<td>
+		<span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@Model.EndDate.ToString("dd,MMM , yyyy")</span>
+	</td>
+	<td>
+		@if (!string.IsNullOrEmpty(Model.Status))
+		{
+			<span class="badge badge-light-@(Model.Status == SubscribtionStatus.Active ? "success" : "warning")  fs-7 fw-bold">@Model.Status</span>
+		}
+	</td>
+	<td class="pe-4">
+		<span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@Model.CreatedOn.ToString("dd,MMM , yyyy")</span>
+	</td>
+</tr>

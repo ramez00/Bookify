@@ -1,0 +1,37 @@
+﻿
+@using System.Drawing;
+
+@inject IWebHostEnvironment webHostEnv;
+
+@{
+    var img = $"{webHostEnv.WebRootPath}/assets/images/logo.png";
+    using Image image = Image.FromFile(img);
+    using MemoryStream ms = new MemoryStream();
+    image.Save(ms,image.RawFormat);
+    var imgSrc = Convert.ToBase64String(ms.ToArray());
+}
+
+<style>
+    #pdfTable {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid black;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    #Logo{
+        width:250px;
+    }
+</style>
+<body>
+    <img id="Logo" src="data:image/png;base64,@imgSrc" />
+    @RenderBody()
+</body>

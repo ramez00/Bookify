@@ -1,0 +1,124 @@
+﻿@model DoctorReportViewModel;
+
+@{
+    ViewData["Title"] = "Doctors Report";
+}
+
+@if (Model.PageMode == 1)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Doctors" method="get" id="reportForm" class="js-exclude-validation">
+                <input type="hidden" name="From" id="From" />
+                <input type="hidden" name="To" id="To" />
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-5">
+                            <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4" data-kt-initialized="1">
+                                <!--begin::Display range-->
+                                <div id="DateRange"></div>
+                                <!--end::Display range-->
+                                <i class="ki-duotone ki-calendar-8 text-gray-500 lh-0 fs-2 ms-2 me-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Show Report</button>
+            </form>
+        </div>
+    </div>
+}
+
+
+@if (Model.Rentals is not null)
+{
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span>Books</span>
+            </div>
+            @if (Model.Rentals.Any())
+            {
+                @if (Model.PageMode == 1)
+                {
+                    <div class="card-toolbar">
+                        <a class="btn btn-sm btn-light-success" asp-action="ExportDoctortoExcel"
+                           asp-route-from="@Context.Request.Query["From"]" asp-route-to="@Context.Request.Query["To"]">
+                            <i class="bi bi-file-spreadsheet"></i>
+                            Export to Excel
+                        </a>
+                        <a class="btn btn-sm btn-light-danger" asp-action="ExportDoctortoPDF"
+                           asp-route-from="@Context.Request.Query["From"]" asp-route-to="@Context.Request.Query["To"]">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                            Export to Pdf
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-toolbar">
+                        <a class="btn btn-sm btn-light-success" asp-action="ExportDelayedPatientToExcel">
+                            <i class="bi bi-file-spreadsheet"></i>
+                            Export to Excel
+                        </a>
+                        <a class="btn btn-sm btn-light-danger" asp-action="ExportDelayedPatientToPDF">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                            Export to Pdf
+                        </a>
+                    </div>
+                }
+
+        }
+        </div>
+        <div class="card-body">
+            @if (Model.Rentals.TotalPages > 1)
+            {
+                <partial name="_PaginationView" model="new PaginationViewModel { PageNumber = Model.Rentals.PageNumber, TotalPages = Model.Rentals.TotalPages}" />
+            }
+            @if (Model.Rentals.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-row-dashed table-row-gray-300 align-middle gy-4">
+                        <thead>
+                            <tr class="fw-bold fs-6 text-gray-800">
+                                <th>Sub. ID</th>
+                                <th>Sub. Name</th>
+                                <th>Sub. Phone</th>
+                                <th>Bk. Title</th>
+                                <th>Bk. Author</th>
+                                <th>Rental Date</th>
+                                <th>End Date</th>
+                                <th>Return Date</th>
+                                <th>Extended On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rental in Model.Rentals)
+                            {
+                                <tr>
+                                    <td>@rental.Rental!.Subscriper!.Id</td>
+                                    <td>@rental.Rental!.Subscriper!.FirstName</td>
+                                    <td>@rental.Rental!.Subscriper!.MobileNumber</td>
+                                    <td>@rental.BookCopy!.Book!.Author!.Name</td>
+                                    <td>@rental.BookCopy!.Book!.Title</td>
+                                    <td>@rental.RentalDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@rental.EndDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@rental.ReturnDate?.ToString("dd-MM-yyyy")</td>
+                                    <td>@rental.ExtendOn?.ToString("dd-MM-yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h5>No rentals were found!</h5>
+            }
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/doctors.js"></script>
+}

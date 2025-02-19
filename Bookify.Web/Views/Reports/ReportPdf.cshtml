@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Book>
+
+@{
+    Layout = "_PdfReportStyle";
+}
+
+<table id="pdfTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Categories</th>
+            <th>Publisher</th>
+            <th>Publishing Date</th>
+            <th>Hall</th>
+            <th>Rental</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author!.Name</td>
+                <td>@(string.Join(", ", book.Categories.Select(c => c.Category!.Name)))</td>
+                <td>@book.Publisher</td>
+                <td>@book.PublishingDate.ToString("dd-MM-yyyy")</td>
+                <td>@book.Hall</td>
+                <td>@(book.IsAvailableForRent ? "yes" : "no")</td>
+                <td>@(book.IsDeleted ? "deleted" : "available")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RentalViewModel>
+
+<table class="table align-middle gs-0 gy-4 @(Model.Any() ? string.Empty : "d-none")" id="rentalTbl">
+    <thead>
+        <tr class="fw-bold text-muted bg-light">
+            <th class="ps-4 min-w-125px rounded-start">Start Date</th>
+            <th class="min-w-125px">No of Copies</th>
+            <th class="min-w-150px">Total Delay (Days)</th>
+            <th class="min-w-125px">Added On</th>
+            <th class="min-w-125px rounded-end pe-4"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rental in Model)
+        {
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-start flex-column">
+                            <span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6 ps-3">@rental.StartDate.ToString("dd,MMM , yyyy")</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6 js-rentals-number">@rental.TotalNumberCopies</span>
+                </td>
+                <td>
+                    @rental.TotalDelayInDays
+                </td>
+                <td class="pe-4">
+                    <span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@rental.CreatedOn.ToString("dd,MMM , yyyy")</span>
+                </td>
+                <td class="text-end">
+                    @if (rental.CreatedOn.Date == DateTime.Today)
+                    {
+                        <a href="javascript:;" class="btn btn-danger btn-sm js-cancel-rental" data-id="@rental.Id">Cancel</a>
+                    }
+                    <a class="btn btn-primary btn-sm" asp-controller="Rental" asp-action="Details" asp-route-id="@rental.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="alert" class=" alert bg-light-warning border border-warning border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-10 js-alert @(!Model.Any() ? string.Empty : "d-none")">
+    <i class="ki-duotone ki-message-text-2 fs-2hx text-warning me-4 mb-5 mb-sm-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+    <div class="d-flex flex-column pe-0 pe-sm-10">
+        <h5 class="mb-1">This subscriber has no rentals yet. </h5>
+    </div>
+</div>

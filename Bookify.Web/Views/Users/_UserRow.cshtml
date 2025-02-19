@@ -1,0 +1,61 @@
+﻿@model UserViewModel
+
+<tr>
+    <td>@Model.FullName</td>
+    <td>@Model.UserName</td>
+    <td>@Model.Email</td>
+    <td>
+        <span class="badge badge-light-@(Model.IsDeleted ? "danger" : "success") js-status">
+            @(Model.IsDeleted ? "Deleted" : "Avaliable")
+        </span>
+    </td>
+    <td>@Model.CreatedOn.ToString("dd-MM-yyy")</td>
+    <td class="js-updated-on">@Model.LastUpdatedOn?.ToString("dd-MM-yyy")</td>
+    <td>
+        <div class="btn-group">
+            <button class="btn btn-link btn-sm show" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="svg-icon svg-icon-primary svg-icon-2x">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor" />
+                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor" opacity="0.3" />
+                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3" />
+                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3" />
+                        </g>
+                    </svg>
+                </span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="javascript:;" class="btn btn-sm btn-outline-primary js-render-modal"
+                       data-title="Edit User"
+                       data-url="Users/Edit/@Model.Id"
+                       data-update="true">
+                        <i class="bi bi-pencil"></i>
+                        Edit
+                    </a>
+                </li>               
+                <li>
+                    <a href="javascript:;" class="btn btn-sm btn-outline-success js-toggle-status"
+                       data-url="/Users/ToggleStatus/@Model.Id">
+                        Toggle Status
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="btn btn-sm btn-outline-success js-unlock-user"
+                       data-url="/Users/UnlockUser/@Model.Id" data-message="Are you sure to unlock this user?">
+                        Unlock User
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="btn btn-sm btn-outline-primary js-render-modal"
+                       data-title="Reset Password"
+                       data-url="Users/ResetPassword/@Model.Id"
+                       data-update="true">
+                        Reset Password
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </td>
+</tr>
