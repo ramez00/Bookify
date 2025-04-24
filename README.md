@@ -61,5 +61,5 @@
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/Bookify.git
+git clone https://github.com/ramez00/Bookify.git
 cd Bookify
