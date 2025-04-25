@@ -52,8 +52,7 @@
 **Tools & Services:**
 - Visual Studio
 - Azure DevOps
-- Background Jobs (e.g., Hangfire or custom)
-
+- Background Jobs => Hangfire
 ---
 
 ## 🚀 Getting Started
