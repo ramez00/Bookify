@@ -62,3 +62,7 @@
 ```bash
 git clone https://github.com/ramez00/Bookify.git
 cd Bookify
+dotnet restore
+dotnet build
+cd Bookify.Web
+dotnet run 
