@@ -12,12 +12,15 @@
                 EmailConfirmed = true,
             };
 
-            var user = await UserManager.FindByEmailAsync(admin.Email);
+            var user = await UserManager.FindByEmailAsync(admin.Email)
+                ?? await UserManager.FindByNameAsync(admin.UserName);
 
             if (user is null)
             {
-                await UserManager.CreateAsync(admin, "Passw@123");
-                await UserManager.AddToRoleAsync(admin, ApplicationRoles.Admin);
+                var result = await UserManager.CreateAsync(admin, "Passw@123");
+
+                if (result.Succeeded)
+                    await UserManager.AddToRoleAsync(admin, ApplicationRoles.Admin);
             }
         }
     }

@@ -58,6 +58,7 @@ var userManger = scope.ServiceProvider.GetRequiredService<UserManager<Applicatio
 
 await DefaultUsers.SeedAdminUser(userManger);
 await DefaultRoles.SeedRoles(roleManager);
+await DefaultGovernorates.SeedGovernorates(scope.ServiceProvider.GetRequiredService<ApplicationDbContext>());
 
 app.UseHangfireDashboard("/AppTasks", new DashboardOptions
 {

@@ -43,7 +43,10 @@ namespace Bookify.Web.Controllers
             var author = _mapper.Map<Author>(model);
             author.CreatedById = User.GetUserId();
 
-            var AuthorViewModal = _mapper.Map<AuthorViewModel>(_unitOfWork.Authors.Add(author));
+            _unitOfWork.Authors.Add(author);
+            _unitOfWork.SaveChanges();
+
+            var AuthorViewModal = _mapper.Map<AuthorViewModel>(author);
 
             return PartialView("_AuthorRow", AuthorViewModal);
         }
